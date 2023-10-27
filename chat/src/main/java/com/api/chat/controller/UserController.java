@@ -34,4 +34,9 @@ public class UserController {
     throws UserNotfoundException, NotAuthorizedUser {
         return userService.updateUser(user,email,authentication);
     }
+
+    @GetMapping("/byId")
+    public User getUerById(@RequestParam Integer id){
+        return userService.getById(id);
+    }
 }

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -57,5 +58,14 @@ public class UserServiceImpl implements UserService {
             return userRepository.save(user);
         }
         throw new UserNotfoundException(email);
+    }
+
+    @Override
+    public User getById(Integer id) throws UserNotfoundException {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            return user.get();
+        }
+        throw new UserNotfoundException(id.toString());
     }
 }

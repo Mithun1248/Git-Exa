@@ -14,4 +14,5 @@ public interface UserService {
     public List<User> getUsersByEmail(String email);
     public User saveUser(User user) throws UserAlreadyException;
     public User updateUser(User user, String email, Authentication authentication) throws UserNotfoundException, NotAuthorizedUser;
+    public User getById(Integer id) throws UserNotfoundException;
 }
