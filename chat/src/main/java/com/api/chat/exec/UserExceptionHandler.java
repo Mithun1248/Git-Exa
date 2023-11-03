@@ -22,4 +22,9 @@ public class UserExceptionHandler {
     public ResponseEntity<String> userFound(UserAlreadyException ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler(PasswordErrorException.class)
+    public ResponseEntity<String> passworError(PasswordErrorException ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
 }

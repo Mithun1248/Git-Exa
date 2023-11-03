@@ -1,6 +1,9 @@
 package com.api.chat.security;
 
+import com.api.chat.exec.PasswordErrorException;
+import com.api.chat.exec.UserNotfoundException;
 import com.api.chat.model.User;
+import com.api.chat.repository.UserRepository;
 import com.api.chat.service.UserService;
 import com.api.chat.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +21,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class CustomAuthenticationProvider{
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) throws PasswordErrorException, UserNotfoundException {
         String email = authentication.getName();
         String password = authentication.getCredentials().toString();
-        User user = userService.getUserByEmail(email);
+        User user = userRepository.findByEmail(email);
         if(user!=null){
             if(passwordEncoder.matches(password,user.getPwd())){
                 List<GrantedAuthority> authorities = new ArrayList<>();
@@ -38,16 +40,11 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 return new UsernamePasswordAuthenticationToken(email,password,authorities);
             }
             else{
-                throw new BadCredentialsException("Password didn't match!");
+                throw new PasswordErrorException("Password didn't match!");
             }
         }
         else{
-            throw new BadCredentialsException("User is not found!");
+            throw new UserNotfoundException("User is not found!");
         }
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 }

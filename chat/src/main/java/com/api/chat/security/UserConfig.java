@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -22,13 +25,25 @@ public class UserConfig {
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http.cors(cors -> cors.configurationSource(
+                request -> {
+                    CorsConfiguration configuration = new CorsConfiguration();
+                    configuration.setAllowedOrigins(List.of("*"));
+                    configuration.setAllowedMethods(List.of("*"));
+                    configuration.setAllowedHeaders(List.of("*"));
+                    return configuration;
+                }
+        ));
+
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/register").permitAll()
+                        auth -> auth
+                                .requestMatchers("/login","/register").permitAll()
                        //         .requestMatchers(HttpMethod.PUT,"/").permitAll()
+
                                 .anyRequest().authenticated()
-                ).formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults());
+                );
+//                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 }

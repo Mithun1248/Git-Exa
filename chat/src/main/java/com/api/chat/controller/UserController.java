@@ -1,5 +1,7 @@
 package com.api.chat.controller;
 
+import com.api.chat.exec.PasswordErrorException;
+import com.api.chat.model.LoginRequest;
 import com.api.chat.model.User;
 import com.api.chat.exec.NotAuthorizedUser;
 import com.api.chat.exec.UserAlreadyException;
@@ -38,5 +40,10 @@ public class UserController {
     @GetMapping("/byId")
     public User getUerById(@RequestParam Integer id) throws UserNotfoundException {
         return userService.getById(id);
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest loginRequest) throws PasswordErrorException, UserNotfoundException {
+        return userService.login(loginRequest.getUsername(),loginRequest.getPassword());
     }
 }
