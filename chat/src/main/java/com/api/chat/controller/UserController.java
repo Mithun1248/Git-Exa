@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/byId")
-    public User getUerById(@RequestParam Integer id){
+    public User getUerById(@RequestParam Integer id) throws UserNotfoundException {
         return userService.getById(id);
     }
 }
