@@ -2,8 +2,6 @@ package com.api.chat.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -28,7 +26,7 @@ public class UserConfig {
         http.cors(cors -> cors.configurationSource(
                 request -> {
                     CorsConfiguration configuration = new CorsConfiguration();
-                    configuration.setAllowedOrigins(List.of("*"));
+                    configuration.setAllowedOrigins(List.of("http://localhost:3000"));
                     configuration.setAllowedMethods(List.of("*"));
                     configuration.setAllowedHeaders(List.of("*"));
                     return configuration;
