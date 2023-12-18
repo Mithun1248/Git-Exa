@@ -7,14 +7,17 @@ import com.api.chat.exec.NotAuthorizedUser;
 import com.api.chat.exec.UserAlreadyException;
 import com.api.chat.exec.UserNotfoundException;
 import com.api.chat.security.CustomAuthenticationProvider;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,15 +28,12 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private CustomAuthenticationProvider customAuthenticationProvider;
-
     public User getUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
 
-    public List<User> getUsersByEmail(String email){
-        return userRepository.findAllByEmail(email);
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 
     public User saveUser(User user) throws UserAlreadyException {
@@ -75,16 +75,4 @@ public class UserServiceImpl implements UserService {
         throw new UserNotfoundException(id.toString());
     }
 
-    @Override
-    public String login(String email, String password) throws PasswordErrorException, UserNotfoundException {
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(email, password);
-        Authentication result = customAuthenticationProvider.authenticate(authentication);
-
-        if (result.isAuthenticated()) {
-            return "Token";
-        } else {
-            return null;
-        }
-    }
 }

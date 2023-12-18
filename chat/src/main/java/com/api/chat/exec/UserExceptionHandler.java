@@ -27,4 +27,9 @@ public class UserExceptionHandler {
     public ResponseEntity<String> passworError(PasswordErrorException ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<String> invalidToken(InvalidTokenException ex){
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+    }
 }

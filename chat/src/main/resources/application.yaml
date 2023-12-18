@@ -6,8 +6,23 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+  application:
+    name: chat-service
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: message-service
+#          uri: lb://message-service
+#          predicates:
+#            - Path=/message/**
+
 server:
   port: 8081
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
 
 #logging:
 #  level:

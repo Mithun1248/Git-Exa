@@ -1,7 +1,5 @@
 package com.api.chat.controller;
 
-import com.api.chat.exec.PasswordErrorException;
-import com.api.chat.model.LoginRequest;
 import com.api.chat.model.User;
 import com.api.chat.exec.NotAuthorizedUser;
 import com.api.chat.exec.UserAlreadyException;
@@ -12,6 +10,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class UserController {
 
@@ -20,17 +20,23 @@ public class UserController {
 
     @PostMapping("/register")
     public User registerUser(@RequestBody User user) throws UserAlreadyException {
-        return userService.saveUser(user);
+        return userService.saveUser(user) ;
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER','OWNER')")
     public User getUserByEmail(@RequestParam String email){
         return userService.getUserByEmail(email);
     }
 
+    @GetMapping("/getAll")
+    @PreAuthorize("hasRole('OWNER')")
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
     @PutMapping("/")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER')")
     public User updateUserData(@RequestBody User user, @RequestParam String email
     , Authentication authentication)
     throws UserNotfoundException, NotAuthorizedUser {
@@ -42,8 +48,8 @@ public class UserController {
         return userService.getById(id);
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody LoginRequest loginRequest) throws PasswordErrorException, UserNotfoundException {
-        return userService.login(loginRequest.getUsername(),loginRequest.getPassword());
+    @GetMapping("/user")
+    public User userLogin(Authentication authentication){
+        return userService.getUserByEmail(authentication.getName());
     }
 }

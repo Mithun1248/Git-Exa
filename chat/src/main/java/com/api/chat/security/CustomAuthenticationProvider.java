@@ -1,11 +1,8 @@
 package com.api.chat.security;
 
-import com.api.chat.exec.PasswordErrorException;
-import com.api.chat.exec.UserNotfoundException;
+import com.api.chat.model.Roles;
 import com.api.chat.model.User;
 import com.api.chat.repository.UserRepository;
-import com.api.chat.service.UserService;
-import com.api.chat.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CustomAuthenticationProvider{
+public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private UserRepository userRepository;
@@ -29,22 +26,31 @@ public class CustomAuthenticationProvider{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Authentication authenticate(Authentication authentication) throws PasswordErrorException, UserNotfoundException {
-        String email = authentication.getName();
-        String password = authentication.getCredentials().toString();
-        User user = userRepository.findByEmail(email);
-        if(user!=null){
-            if(passwordEncoder.matches(password,user.getPwd())){
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
-                return new UsernamePasswordAuthenticationToken(email,password,authorities);
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String username = authentication.getName();
+        String pwd = authentication.getCredentials().toString();
+        User customer = userRepository.findByEmail(username);
+        if (customer!= null) {
+            if (passwordEncoder.matches(pwd, customer.getPwd())) {
+                return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(customer.getRole()));
+            } else {
+                throw new BadCredentialsException("Invalid password!");
             }
-            else{
-                throw new PasswordErrorException("Password didn't match!");
-            }
-        }
-        else{
-            throw new UserNotfoundException("User is not found!");
+        }else {
+            throw new BadCredentialsException("No user registered with this details!");
         }
     }
+
+    private List<GrantedAuthority> getGrantedAuthorities(Roles authorities) {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority(authorities.name()));
+        return grantedAuthorities;
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+
 }
