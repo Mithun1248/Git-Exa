@@ -1,4 +1,4 @@
-package com.api.chat.exec;
+package com.api.chat.execeptions;
 
 public class PasswordErrorException extends Exception {
     public PasswordErrorException(String s) {

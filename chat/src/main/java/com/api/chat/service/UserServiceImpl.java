@@ -1,23 +1,16 @@
 package com.api.chat.service;
 
-import com.api.chat.exec.PasswordErrorException;
 import com.api.chat.model.User;
 import com.api.chat.repository.UserRepository;
-import com.api.chat.exec.NotAuthorizedUser;
-import com.api.chat.exec.UserAlreadyException;
-import com.api.chat.exec.UserNotfoundException;
-import com.api.chat.security.CustomAuthenticationProvider;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.api.chat.execeptions.NotAuthorizedUser;
+import com.api.chat.execeptions.UserAlreadyException;
+import com.api.chat.execeptions.UserNotfoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {

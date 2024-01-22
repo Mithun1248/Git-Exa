@@ -1,9 +1,9 @@
 package com.api.chat.controller;
 
 import com.api.chat.model.User;
-import com.api.chat.exec.NotAuthorizedUser;
-import com.api.chat.exec.UserAlreadyException;
-import com.api.chat.exec.UserNotfoundException;
+import com.api.chat.execeptions.NotAuthorizedUser;
+import com.api.chat.execeptions.UserAlreadyException;
+import com.api.chat.execeptions.UserNotfoundException;
 import com.api.chat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -44,6 +44,7 @@ public class UserController {
     }
 
     @GetMapping("/byId")
+    @PreAuthorize("hasAnyRole('USER','OWNER')")
     public User getUerById(@RequestParam Integer id) throws UserNotfoundException {
         return userService.getById(id);
     }

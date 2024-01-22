@@ -1,4 +1,4 @@
-package com.api.chat.exec;
+package com.api.chat.execeptions;
 
 public class NotAuthorizedUser extends Exception {
     public NotAuthorizedUser(String s) {
