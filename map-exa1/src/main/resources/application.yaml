@@ -1,0 +1,18 @@
+
+server:
+  port: 9090
+
+spring:
+  application:
+    name: MappingDemo
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo1
+    username: root
+    password: Sasken@12345
+
+
