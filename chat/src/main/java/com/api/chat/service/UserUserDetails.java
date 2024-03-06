@@ -22,8 +22,9 @@ public class UserUserDetails implements UserDetails{
     public UserUserDetails(User user,PasswordEncoder key) {
         this.name = user.getEmail();
         this.password = user.getPwd();
-        this.authorities = Arrays.stream(user.getRole().name().split(","))
-                .map(SimpleGrantedAuthority::new)
+        this.authorities = user.getRole().stream()
+                .map(role -> new SimpleGrantedAuthority(role.name()))
+ //               .toList();
                 .collect(Collectors.toList());
     }
 

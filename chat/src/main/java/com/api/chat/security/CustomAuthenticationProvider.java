@@ -33,7 +33,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         User customer = userRepository.findByEmail(username);
         if (customer!= null) {
             if (passwordEncoder.matches(pwd, customer.getPwd())) {
-                return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(customer.getRole()));
+                return new UsernamePasswordAuthenticationToken(username, pwd, getGrantedAuthorities(customer.getRole().get(0)));
             } else {
                 throw new BadCredentialsException("Invalid password!");
             }

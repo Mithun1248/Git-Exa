@@ -3,6 +3,8 @@ package com.api.chat.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -21,5 +23,5 @@ public class User {
     private String pwd;
 
     @Enumerated(value = EnumType.STRING)
-    private Roles role = Roles.USER;
+    private List<Roles> role = List.of(Roles.USER);
 }

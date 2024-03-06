@@ -3,6 +3,9 @@ package com.api.chat.security;
 import com.api.chat.filters.JWTTokenGenerationFilter;
 import com.api.chat.filters.JWTTokenValidatorFilter;
 import com.api.chat.service.UserDetailsServiceImpl;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 
 import javax.sql.DataSource;
@@ -67,6 +71,10 @@ public class UserConfig {
         http.authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers("/register").permitAll()
+                                .requestMatchers("/send-mail").permitAll()
+                                .requestMatchers("/send-html").permitAll()
+                                .requestMatchers("/send-html-template").permitAll()
+                                .requestMatchers("/send-html-attachment").permitAll()
 //                                .requestMatchers("/actuator/*").permitAll()
 //                                .requestMatchers("/actuator").permitAll()
 //                                .requestMatchers("/user").authenticated()
