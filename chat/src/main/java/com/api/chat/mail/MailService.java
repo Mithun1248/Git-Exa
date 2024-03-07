@@ -24,7 +24,7 @@ public class MailService {
 
     public void sendmail(String to,String message,String subject){
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("hello@demomailtrap.com");
+//        mailMessage.setFrom("csmdvg1@gmail.com"); //Can't be overridden in gmail smtp
         mailMessage.setTo(to);
         mailMessage.setSubject(subject);
         mailMessage.setText(message);
@@ -34,7 +34,7 @@ public class MailService {
     public void sendHtmlEmail(String to, String message, String subject) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-        helper.setFrom("hello@demomailtrap.com");
+//        helper.setFrom("hello@demomailtrap.com");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText("<h1>Hello This is html mail!</h1>" +
@@ -48,7 +48,7 @@ public class MailService {
         Path path = Paths.get("D:/files/random.txt");
         String htmlTemplate =Files.readString(path, StandardCharsets.UTF_8);
         String htmlBody = htmlTemplate.replace("${message}",message);
-        helper.setFrom("hello@demomailtrap.com");
+//        helper.setFrom("hello@demomailtrap.com");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(htmlBody, true);
@@ -61,7 +61,7 @@ public class MailService {
         Path path = Paths.get("D:/files/random.txt");
         String htmlTemplate =Files.readString(path, StandardCharsets.UTF_8);
         String htmlBody = htmlTemplate.replace("${message}",message);
-        helper.setFrom("hello@demomailtrap.com");
+//        helper.setFrom("mithunsnayak389@gmail.com");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(htmlBody, true);

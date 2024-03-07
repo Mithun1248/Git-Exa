@@ -15,10 +15,10 @@ spring:
           auth: true
           starttls:
             enable: true
-    host: live.smtp.mailtrap.io
-    post: 2525
-    username: api
-    password: e8ecea2ad1e1cd0a747c11d7c18acec3
+    host: smtp.gmail.com
+    post: 587
+    username: mithunsnayak389@gmail.com
+    password: reef yafm hjkj pilm
 #  cloud:
 #    gateway:
 #      routes:
