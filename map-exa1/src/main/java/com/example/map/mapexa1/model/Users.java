@@ -18,14 +18,14 @@ public class Users {
 
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name="group_id")
-//    @JsonManagedReference
-//    private UserGroup groups;
-
     @ManyToOne
     @JoinColumn(name="group_id")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonManagedReference
     private UserGroup groups;
+
+//    @ManyToOne
+//    @JoinColumn(name="group_id")
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//    private UserGroup groups;
 }

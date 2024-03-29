@@ -20,12 +20,12 @@ public class UserGroup {
 
     private String groupName;
 
-//    @OneToMany(mappedBy = "groups")
-//    @JsonBackReference
-//    private List<Users> users;
-
     @OneToMany(mappedBy = "groups")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonBackReference
     private List<Users> users;
+
+//    @OneToMany(mappedBy = "groups")
+//    @JsonIdentityReference(alwaysAsId = true)
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+//    private List<Users> users;
 }

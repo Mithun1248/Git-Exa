@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -26,5 +27,16 @@ public class UsersController {
             return "User created!";
         }
         return "Error in creating user!";
+    }
+
+    @PostMapping("/add-group")
+    public String addGroup(@RequestParam Integer id,@RequestParam Integer gr) throws Exception {
+        Optional<Users> users = userRepository.findById(id);
+        if(users.isPresent()){
+
+        }
+        else{
+            throw new Exception("User not present");
+        }
     }
 }
