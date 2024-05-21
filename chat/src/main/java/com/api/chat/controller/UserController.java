@@ -1,5 +1,8 @@
 package com.api.chat.controller;
 
+import com.api.chat.annotations.Author;
+import com.api.chat.annotations.Authors;
+import com.api.chat.annotations.Creator;
 import com.api.chat.model.User;
 import com.api.chat.execeptions.NotAuthorizedUser;
 import com.api.chat.execeptions.UserAlreadyException;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Authors({@Author(name = "Mithun")})
+@Creator(name = "Mithun1")
 public class UserController {
 
     @Autowired

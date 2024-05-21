@@ -7,8 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@Authors({@Author(name = "Mithun")})
-@Creator(name = "Mithun1")
 public class ChatApplication {
 
 	public static void main(String[] args)
